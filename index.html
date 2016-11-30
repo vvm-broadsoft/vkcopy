@@ -56,7 +56,7 @@ function VKAPI_photosget(oid,aid,itr)
 				//append(data.response[j].pid + ' ');
 				imgcount++;
 				}
-			append((100*itr/albumscount) + '% P[' + j + '] ');
+			append(Number(100*itr/albumscount).toFixed(2) + '% P[' + j + '] ');
 			} else {
 				clear();
 				append('Error: <pre>' + JSON.stringify(data.error, null, '  ') + '</pre>');
