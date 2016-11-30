@@ -11,6 +11,7 @@ function loadAlbums(owner_id) {
     'photos.getAlbums',
     {owner_id: owner_id},
     function(data) { 
+      console.log(data);
       if (data.response) { 
          document.getElementById('status').innerHTML = data.response;
       } 
