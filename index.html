@@ -44,7 +44,7 @@ function loadAlbums(owner_id) {
       console.log(data);
       if (data.response) { 
          for (var i in data.response) {
-           append('<li>' + data.response[i].aid + ' ' + data.response[i].title);
+           append(data.response[i].aid + ' ');
          }
       } else {
          clear();
