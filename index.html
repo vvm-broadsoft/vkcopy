@@ -34,10 +34,7 @@ function autosize(width) {
         }
     }
   
-$(document).ready( function(){
-        //Вызываем функцию регулировки высоты каждые пол секунды.
-        setInterval('autosize(607)', 500);
-    });
+
   
 function loadAlbums(owner_id) {
   VK.api(
@@ -54,6 +51,7 @@ function loadAlbums(owner_id) {
          append('Error: <pre>' + JSON.stringify(data.error, null, '  ') + '</pre>');
       }
   });
+	VK.callMethod("resizeWindow", 510, 600); 
 }
 
 </script>
