@@ -6,6 +6,14 @@
 </script>
 <script>
 
+function clear(text) {
+   document.getElementById('status').innerHTML = '';
+}
+  
+function append(text) {
+   document.getElementById('status').innerHTML += text;
+}
+  
 function loadAlbums(owner_id) {
   VK.api(
     'photos.getAlbums',
@@ -13,8 +21,13 @@ function loadAlbums(owner_id) {
     function(data) { 
       console.log(data);
       if (data.response) { 
-         document.getElementById('status').innerHTML = data.response;
-      } 
+         for (var i in data.response) {
+           append('<li>' + data.respose[i].aid + ' ' + data.respose[i].title);
+         }
+      } else {
+         clear();
+         append('Error: <pre>' + JSON.stringify(data.error) + '</pre>');
+      }
   });
 }
 
