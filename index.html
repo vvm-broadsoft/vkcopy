@@ -46,6 +46,7 @@ function loadAlbums(owner_id) {
          for (var i in data.response) {
            append(data.response[i].aid + ' ');
          }
+	 append('TOTAL:' + i);
       } else {
          clear();
          append('Error: <pre>' + JSON.stringify(data.error, null, '  ') + '</pre>');
