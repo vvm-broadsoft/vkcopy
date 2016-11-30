@@ -33,7 +33,15 @@ function autosize(width) {
 	    alert('error #2');
         }
     }
-  
+ 
+function sleep(milliseconds) {
+  var start = new Date().getTime();
+  for (var i = 0; i < 1e7; i++) {
+    if ((new Date().getTime() - start) > milliseconds){
+      break;
+    }
+  }
+} 
 
   
 function loadAlbums(owner_id) {
@@ -48,6 +56,7 @@ function loadAlbums(owner_id) {
          for (var i in data.response) {
            append(data.response[i].aid + ' ');
 		   albums[i]=data.response[i].aid;
+		   sleep(3000);
 		   VK.api(
 			'photos.get',
 			{owner_id: owner_id, album_id: albums[i]},
