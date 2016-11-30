@@ -81,7 +81,7 @@ function loadAlbums(owner_id) {
            	   //append(data.response[i].aid + ' ');
 		   albums[i]=data.response[i].aid;
 		   //sleep(3000);
-		   setTimeout(VKAPI_photosget,100*i,owner_id,albums[i],i);
+		   setTimeout(VKAPI_photosget,200*i,owner_id,albums[i],i);
          }
 	 append('A[' + i + ']');
 	  albumscount=i;
