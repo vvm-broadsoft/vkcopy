@@ -22,7 +22,7 @@ function loadAlbums(owner_id) {
       console.log(data);
       if (data.response) { 
          for (var i in data.response) {
-           append('<li>' + data.respose[i].aid + ' ' + data.respose[i].title);
+           append('<li>' + data.response[i].aid + ' ' + data.response[i].title);
          }
       } else {
          clear();
