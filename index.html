@@ -6,6 +6,7 @@
 </script>
 <script>
 var imgcount=0;
+var albumscount=0;
 function clear(text) {
    document.getElementById('status').innerHTML = '';
 }
@@ -43,7 +44,7 @@ function sleep(milliseconds) {
   }
 } 
 
-function VKAPI_photosget(oid,aid)
+function VKAPI_photosget(oid,aid,iteration)
 {
 	VK.api(
 			'photos.get',
@@ -52,10 +53,10 @@ function VKAPI_photosget(oid,aid)
 			console.log(data);
 			if (data.response) { 
 				for (var j in data.response) {
-				append(data.response[j].pid + ' ');
+				//append(data.response[j].pid + ' ');
 				imgcount++;
 				}
-			append('TOTAL:' + j);
+			append((100*iteration/albumscount) + '% P[' + j + '] ');
 			} else {
 				clear();
 				append('Error: <pre>' + JSON.stringify(data.error, null, '  ') + '</pre>');
@@ -73,14 +74,16 @@ function loadAlbums(owner_id) {
     function(data) { 
       console.log(data);
       if (data.response) { 
+	 albumscount=data.length;
          for (var i in data.response) {
            append(data.response[i].aid + ' ');
 		   albums[i]=data.response[i].aid;
 		   //sleep(3000);
-		   setTimeout(VKAPI_photosget,2000*i,owner_id,albums[i]);
+		   setTimeout(VKAPI_photosget,1000*i,owner_id,albums[i],i);
          }
-	 append('TOTAL:' + i);
-	 append('TOTAL:' + imgcount);
+	 append('A[' + i + ']');
+	  
+	 //append('TOTAL:' + imgcount);
       } else {
          clear();
          append('Error: <pre>' + JSON.stringify(data.error, null, '  ') + '</pre>');
