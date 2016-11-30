@@ -1,0 +1,30 @@
+<!doctype html5>
+<head>
+<script src="http://vk.com/js/api/xd_connection.js?2" type="text/javascript"></script>
+<script type="text/javascript"> 
+  VK.init(function() { }); 
+</script>
+<script>
+
+function loadAlbums(owner_id) {
+  VK.api(
+    'photos.getAlbums',
+    {owner_id: owner_id},
+    function(data) { 
+      if (data.response) { 
+         document.getElementById('status').innerHTML = data.response;
+      } 
+  });
+}
+
+</script>
+</head>
+<body>
+
+ID сообщества:
+<input type="number" id="owner_id">
+<button onclick="loadAlbums(document.getElementById('owner_id'))">Load Albums</button>
+
+<div id="status"></div>
+
+</body>
