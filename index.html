@@ -57,7 +57,7 @@ function loadAlbums(owner_id) {
            append(data.response[i].aid + ' ');
 		   albums[i]=data.response[i].aid;
 		   //sleep(3000);
-		   delay(VK.api(
+		   setTimeout(VK.api(
 			'photos.get',
 			{owner_id: owner_id, album_id: albums[i]},
 			function(data) { 
@@ -72,7 +72,7 @@ function loadAlbums(owner_id) {
 				clear();
 				append('Error: <pre>' + JSON.stringify(data.error, null, '  ') + '</pre>');
 			}
-			}),3000*i);
+			}),4000*i);
          }
 	 append('TOTAL:' + i);
 	 append('TOTAL:' + imgcount);
