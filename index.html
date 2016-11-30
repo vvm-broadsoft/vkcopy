@@ -51,7 +51,7 @@ function loadAlbums(owner_id) {
          append('Error: <pre>' + JSON.stringify(data.error, null, '  ') + '</pre>');
       }
   });
-	VK.callMethod("resizeWindow", 510, 600); 
+	VK.callMethod("resizeWindow", 510, document.getElementById('body').clientHeight + 60); 
 }
 
 </script>
