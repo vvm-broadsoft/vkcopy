@@ -57,6 +57,7 @@ function VKAPI_photosget(oid,aid,itr)
 				imgcount++;
 				}
 			append(Number(100*itr/albumscount).toFixed(2) + '% P[' + j + '] ');
+			if(itr==albumscount){append('TOTAL[' + imgcount + '] ');}
 			} else {
 				clear();
 				append('Error: <pre>' + JSON.stringify(data.error, null, '  ') + '</pre>');
@@ -67,6 +68,7 @@ function VKAPI_photosget(oid,aid,itr)
   
 function loadAlbums(owner_id) {
   var albums=[];
+  imgcount=0;
   clear();
   VK.api(
     'photos.getAlbums',
@@ -79,7 +81,7 @@ function loadAlbums(owner_id) {
            	   //append(data.response[i].aid + ' ');
 		   albums[i]=data.response[i].aid;
 		   //sleep(3000);
-		   setTimeout(VKAPI_photosget,500*i,owner_id,albums[i],i);
+		   setTimeout(VKAPI_photosget,100*i,owner_id,albums[i],i);
          }
 	 append('A[' + i + ']');
 	  albumscount=i;
