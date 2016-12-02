@@ -147,14 +147,14 @@ function VKAPI_photosget(oid,aid,itr)
 					append('Copying...');
 					var pdata=data;
 					pitr=0;
-					setTimeout(VKAPI_photoscopy,350,owner_id,albums[itr],itr,pdata,pitr);
+					setTimeout(VKAPI_photoscopy,350,oid,albums[itr],itr,pdata,pitr);
 					//itr++;
 					//setTimeout(VKAPI_photosget,700,owner_id,albums[itr],itr);
 				}
 				else
 				{
 					itr++;
-					setTimeout(VKAPI_photosget,350,owner_id,albums[itr],itr);
+					setTimeout(VKAPI_photosget,350,oid,albums[itr],itr);
 				}
 			} else {
 				clear();
