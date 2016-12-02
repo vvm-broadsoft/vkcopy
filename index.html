@@ -112,7 +112,7 @@ function VKAPI_photoscopy(oid,aid,itr,pdata,pitr)
 	photoid=pdata.response[pitr].pid
 	VK.api(
 			'photos.copy',
-			{owner_id: oid, photo_id: photoid, access_key: atoken},
+			{owner_id: oid, photo_id: photoid},
 			function(data) { 
 			console.log(data);
 			if (data.response) { 
