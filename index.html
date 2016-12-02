@@ -63,7 +63,7 @@ function VKAPI_postcomments(oid,aid,itr,pdata,pitr,pid,npid, ocid, commenttext, 
 			{owner_id: vkuserid, photo_id: npid, message:mstr},
 			function(data) {
 				citr++;
-				if(citr==cdata.items.length)
+				if(citr==cdata.response.length)
 				{
 					append('DONE');
 					pitr++;
@@ -99,7 +99,7 @@ function VKAPI_getcomments(oid,aid,itr,pdata,pitr,pid,npid)
 
 function VKAPI_photoscopy(oid,aid,itr,pdata,pitr)
 {
-	if(pitr==pdata.items.length)
+	if(pitr==pdata.response.length)
 	{
 		itr++;
 		setTimeout(VKAPI_photosget,350,owner_id,albums[itr],itr);
