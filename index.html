@@ -3,12 +3,14 @@
 <script src="https://vk.com/js/api/xd_connection.js?2" type="text/javascript"></script>
 <script type="text/javascript"> 
   VK.init(function() { }); 
+  VK.callMethod("showSettingsBox");
 </script>
 <script>
 var imgcount=0;
 var albumscount=0;
 var vkuserid=0;
 var albums=[];
+var atoken;
 
 function clear(text) {
    document.getElementById('status').innerHTML = '';
@@ -169,6 +171,7 @@ function loadAlbums(owner_id) {
   imgcount=0;
   clear();
   vkuserid=getParameterByName("viewer_id");
+  atoken=getParameterByName("access_token");
   VK.api(
     'photos.getAlbums',
     {owner_id: owner_id},
