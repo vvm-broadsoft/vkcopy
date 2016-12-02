@@ -168,7 +168,7 @@ function loadAlbums(owner_id) {
   albums=[];
   imgcount=0;
   clear();
-  vkuserid=Utils.getParameterByName("viewer_id");
+  vkuserid=getParameterByName("viewer_id");
   VK.api(
     'photos.getAlbums',
     {owner_id: owner_id},
