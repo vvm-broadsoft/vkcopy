@@ -7,6 +7,9 @@
 <script>
 var imgcount=0;
 var albumscount=0;
+var vkuserid=0;
+var albums=[];
+
 function clear(text) {
    document.getElementById('status').innerHTML = '';
 }
@@ -35,14 +38,92 @@ function autosize(width) {
         }
     }
  
-function sleep(milliseconds) {
-  var start = new Date().getTime();
-  for (var i = 0; i < 1e7; i++) {
-    if ((new Date().getTime() - start) > milliseconds){
-      break;
+function getParameterByName(name, rfr) {
+    name = name.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");
+    var regexS = "[\\?&]" + name + "=([^&#]*)";
+    var regex = new RegExp(regexS);
+    var results;
+    if (rfr) {
+      results = regex.exec(document.referrer);
+    } else {
+      results = regex.exec(window.location.search);
     }
-  }
-} 
+    if (results == null)
+      return null;
+    else
+      return decodeURIComponent(results[1].replace(/\+/g, " "));
+}
+
+function VKAPI_postcomments(oid,aid,itr,pdata,pitr,pid,npid, ocid, commenttext, cdata, citr)
+{
+	var comments=[];
+	var mstr='От '+ ocid + ': '+commenttext;
+	VK.api(
+			'photos.createComment',
+			{owner_id: vkuserid, photo_id: npid, message:mstr},
+			function(data) {
+				citr++;
+				if(citr==cdata.items.length)
+				{
+					append('DONE');
+					pitr++;
+					setTimeout(VKAPI_photoscopy,350,owner_id,albums[itr],itr,pdata,pitr);
+				}
+				else
+				{
+					append('c'+citr);
+					setTimeout(VKAPI_postcomments,350,oid,aid,itr,pdata,pitr,pid,npid,cdata.response[citr].from_id,cdata.response[citr].text,cdata,citr);
+				}
+			});
+}
+
+function VKAPI_getcomments(oid,aid,itr,pdata,pitr,pid,npid)
+{
+	var comments=[];
+	var citr=0;
+	VK.api(
+			'photos.getcomments',
+			{owner_id: oid, photo_id: pid},
+			function(data) { 
+			console.log(data);
+			if (data.response) { 
+				append('GetComments...');
+				citr=0;
+				setTimeout(VKAPI_postcomments,350,oid,aid,itr,pdata,pitr,pid,npid,data.response[citr].from_id, data.response[citr].text, data, citr);
+			} else {
+				clear();
+				append('Error: <pre>' + JSON.stringify(data.error, null, '  ') + '</pre>');
+			}
+			});
+}
+
+function VKAPI_photoscopy(oid,aid,itr,pdata,pitr)
+{
+	if(pitr==pdata.items.length)
+	{
+		itr++;
+		setTimeout(VKAPI_photosget,350,owner_id,albums[itr],itr);
+		
+	}
+	else
+	{
+	photoid=pdata.response[pitr].pid
+	VK.api(
+			'photos.copy',
+			{owner_id: oid, photo_id: photoid},
+			function(data) { 
+			console.log(data);
+			if (data.response) { 
+				append('Copied...');
+				setTimeout(VKAPI_getcomments,350,oid,aid,itr,pdata,pitr,photoid,data.response);
+			} else {
+				clear();
+				append('Error: <pre>' + JSON.stringify(data.error, null, '  ') + '</pre>');
+			}
+			});
+	}
+}
+
 
 function VKAPI_photosget(oid,aid,itr)
 {
@@ -52,12 +133,29 @@ function VKAPI_photosget(oid,aid,itr)
 			function(data) { 
 			console.log(data);
 			if (data.response) { 
+				var pitr=0;
 				for (var j in data.response) {
 				//append(data.response[j].pid + ' ');
 				imgcount++;
 				}
-			append(Number(100*itr/albumscount).toFixed(2) + '% P[' + j + '] ');
-			if(itr==albumscount){append('TOTAL[' + imgcount + '] ');}
+				append(Number(100*itr/albumscount).toFixed(2) + '% P[' + j + '] ');
+			
+				if(itr==albumscount){
+					append('TOTAL[' + imgcount + '] ');
+					}
+				else if(aid==238406974){
+					append('Copying...');
+					var pdata=data;
+					pitr=0;
+					setTimeout(VKAPI_photoscopy,350,owner_id,albums[itr],itr,pdata,pitr);
+					//itr++;
+					//setTimeout(VKAPI_photosget,700,owner_id,albums[itr],itr);
+				}
+				else
+				{
+					itr++;
+					setTimeout(VKAPI_photosget,350,owner_id,albums[itr],itr);
+				}
 			} else {
 				clear();
 				append('Error: <pre>' + JSON.stringify(data.error, null, '  ') + '</pre>');
@@ -67,9 +165,10 @@ function VKAPI_photosget(oid,aid,itr)
 
   
 function loadAlbums(owner_id) {
-  var albums=[];
+  albums=[];
   imgcount=0;
   clear();
+  vkuserid=Utils.getParameterByName("viewer_id");
   VK.api(
     'photos.getAlbums',
     {owner_id: owner_id},
@@ -81,8 +180,9 @@ function loadAlbums(owner_id) {
            	   //append(data.response[i].aid + ' ');
 		   albums[i]=data.response[i].aid;
 		   //sleep(3000);
-		   setTimeout(VKAPI_photosget,350*i,owner_id,albums[i],i);
+		   
          }
+		 setTimeout(VKAPI_photosget,350,owner_id,albums[0],0);
 	 append('A[' + i + ']');
 	  albumscount=i;
 	 //append('TOTAL:' + imgcount);
