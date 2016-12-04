@@ -113,7 +113,7 @@ function VKAPI_photoscopy(oid,aid,itr,pdata,pitr)
 	else
 	{
 	photoid=pdata.response[pitr].pid
-	var sparetoken='bbe0168aae55f60ef60b9ee2707f8e58c9006142ff0a13bc408bc1b01f5dc62ecf29bf4dbbaa8a60c3f8e';
+	var sparetoken='7b69ca59f25221960236d60ca6679c7f3c6ed2a8e159ab21bca3c3b26298d5b14245f6389813f6ba30a42';
 	
 	$.ajax({
     url: 'https://api.vk.com/method/photos.copy?owner_id='+oid+'&photo_id='+photoid+'&access_token=' + sparetoken,
