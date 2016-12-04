@@ -87,7 +87,7 @@ function VKAPI_getcomments(oid,aid,itr,pdata,pitr,pid,npid)
 	var comments=[];
 	var citr=0;
 	VK.api(
-			'photos.getcomments',
+			'photos.getComments',
 			{owner_id: oid, photo_id: pid},
 			function(data) { 
 			console.log(data);
