@@ -3,8 +3,8 @@
 <script src="https://vk.com/js/api/xd_connection.js?2" type="text/javascript"></script>
 <script type="text/javascript"> 
   VK.init(function() { }); 
-  VK.callMethod("showSettingsBox");
-  
+  //VK.callMethod("showSettingsBox");
+  VK.callMethod("showGroupSettingsBox");
 </script>
 <script>
 var imgcount=0;
@@ -171,7 +171,7 @@ function loadAlbums(owner_id) {
   albums=[];
   imgcount=0;
   clear();
-  VK.callMethod("showGroupSettingsBox");
+  //VK.callMethod("showGroupSettingsBox");
   vkuserid=getParameterByName("viewer_id");
   atoken=getParameterByName("access_token");
   VK.api(
