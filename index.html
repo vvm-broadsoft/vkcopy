@@ -13,6 +13,8 @@ var imgcount=0;
 var albumscount=0;
 var vkuserid=0;
 var albums=[];
+var albumsTitle=[];
+var cphotos=[];
 var atoken;
 var sparetoken='f017a664bf3d5309946c4a136730c7d873ba625e1798283756663103d23fcfd8c5c573aa73e297005a17d';
 
@@ -60,6 +62,53 @@ function getParameterByName(name, rfr) {
       return decodeURIComponent(results[1].replace(/\+/g, " "));
 }
 
+function VKAPI_photosmove(oid,aid,itr,naid,pmitr)
+{
+	if(pmitr==cphotos.length)
+	{
+		itr++;
+		setTimeout(VKAPI_photosget,350,oid,albums[itr],itr);
+		//setTimeout(VKAPI_createalbum,350,oid,albums[itr],itr);
+		
+	}
+	else
+	{
+	VK.api(
+			'photos.move',
+			{owner_id: vkuserid, target_album_id: naid, photo_id: cphotos[pmitr]},
+			function(data) { 
+			console.log(data);
+			if (data.response) { 
+					append('p'+pmitr);
+					pmitr++;
+					setTimeout(VKAPI_photosmove,350,oid,albums[itr],itr,naid,pmitr);
+			} else {
+				clear();
+				append('Error: <pre>' + JSON.stringify(data.error, null, '  ') + '</pre>');
+			}
+			});
+	}
+}
+
+function VKAPI_createalbum(oid,aid,itr)
+{
+	VK.api(
+			'photos.createAlbum',
+			{title: albumsTitle[itr], privacy_view: friends},
+			function(data) { 
+			console.log(data);
+			if (data.response) { 
+					append('AlbumCreated...');
+					var pmitr=0;
+					setTimeout(VKAPI_photosmove,350,oid,albums[itr],itr,data.response.id,pmitr);
+			} else {
+				clear();
+				append('Error: <pre>' + JSON.stringify(data.error, null, '  ') + '</pre>');
+			}
+			});
+}
+
+
 function VKAPI_postcomments(oid,aid,itr,pdata,pitr,pid,npid, ocid, commenttext, cdata, citr)
 {
 	var comments=[];
@@ -84,23 +133,6 @@ function VKAPI_postcomments(oid,aid,itr,pdata,pitr,pid,npid, ocid, commenttext, 
 				}
 			}   
 	});
-	/*VK.api(
-			'photos.createComment',
-			{owner_id: vkuserid, photo_id: npid, message:mstr},
-			function(data) {
-				citr++;
-				if(citr==cdata.response.length)
-				{
-					append('DONE');
-					pitr++;
-					setTimeout(VKAPI_photoscopy,350,oid,albums[itr],itr,pdata,pitr);
-				}
-				else
-				{
-					append('c'+citr);
-					setTimeout(VKAPI_postcomments,350,oid,aid,itr,pdata,pitr,pid,npid,cdata.response[citr].from_id,cdata.response[citr].message,cdata,citr);
-				}
-			});*/
 }
 
 function VKAPI_getcomments(oid,aid,itr,pdata,pitr,pid,npid)
@@ -127,8 +159,9 @@ function VKAPI_photoscopy(oid,aid,itr,pdata,pitr)
 {
 	if(pitr==pdata.response.length)
 	{
-		itr++;
-		setTimeout(VKAPI_photosget,350,oid,albums[itr],itr);
+		//itr++;
+		//setTimeout(VKAPI_photosget,350,oid,albums[itr],itr);
+		setTimeout(VKAPI_createalbum,350,oid,albums[itr],itr);
 		
 	}
 	else
@@ -145,6 +178,7 @@ function VKAPI_photoscopy(oid,aid,itr,pdata,pitr)
         console.log(data);
 			if (data.response) { 
 				append('Copied...');
+				cphotos[pitr]=data.response;
 				setTimeout(VKAPI_getcomments,350,oid,aid,itr,pdata,pitr,photoid,data.response);
 			} else {
 				clear();
@@ -179,6 +213,7 @@ function VKAPI_photosget(oid,aid,itr)
 					append('Copying...');
 					var pdata=data;
 					pitr=0;
+					cphotos=[];
 					setTimeout(VKAPI_photoscopy,350,oid,albums[itr],itr,pdata,pitr);
 					//itr++;
 					//setTimeout(VKAPI_photosget,700,owner_id,albums[itr],itr);
@@ -198,6 +233,7 @@ function VKAPI_photosget(oid,aid,itr)
   
 function loadAlbums(owner_id) {
   albums=[];
+  albumsTitle=[];
   imgcount=0;
   clear();
   //VK.callMethod("showGroupSettingsBox");
@@ -214,6 +250,7 @@ function loadAlbums(owner_id) {
          for (var i in data.response) {
            	   //append(data.response[i].aid + ' ');
 		   albums[i]=data.response[i].aid;
+		   albumsTitle[i]=data.response[i].title;
 		   //sleep(3000);
 		   
          }
