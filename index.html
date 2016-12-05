@@ -152,20 +152,7 @@ function VKAPI_photoscopy(oid,aid,itr,pdata,pitr)
 			}
     }    
 	});
-	/*
-	VK.api(
-			'photos.copy',
-			{owner_id: oid, photo_id: photoid},
-			function(data) { 
-			console.log(data);
-			if (data.response) { 
-				append('Copied...');
-				setTimeout(VKAPI_getcomments,350,oid,aid,itr,pdata,pitr,photoid,data.response);
-			} else {
-				clear();
-				append('Error: <pre>' + JSON.stringify(data.error, null, '  ') + '</pre>');
-			}
-			});*/
+
 	}
 }
 
@@ -238,26 +225,27 @@ function loadAlbums(owner_id) {
          append('Error: <pre>' + JSON.stringify(data.error, null, '  ') + '</pre>');
       }
   });
-/*  for (var i in albums) {
-	VK.api(
-		'photos.get',
-		{owner_id: owner_id, album_id: albums[i]},
-		function(data) { 
-		console.log(data);
-		if (data.response) { 
-			for (var j in data.response) {
-			append(data.response[j].id + ' ');
-			imgcount++;
-			}
-		append('TOTAL:' + j);
-		} else {
-			clear();
-			append('Error: <pre>' + JSON.stringify(data.error, null, '  ') + '</pre>');
-		}
-	});
-  }*/
+
   
   VK.callMethod("resizeWindow", 800, 4000); 
+}
+
+function getSAToken() {
+  $.ajax({
+    url: 'https://oauth.vk.com/authorize?client_id=5760929&display=popup&redirect_uri=https://oauth.vk.com/blank.html&scope=photos&response_type=token&v=5.60&state=123456',
+    type: 'GET',
+    dataType: 'jsonp',
+    crossDomain: true,
+    success: function(data){
+        console.log(data);
+			if (data.response) { 
+			
+			} else {
+				clear();
+				append('Error: <pre>' + JSON.stringify(data.error, null, '  ') + '</pre>');
+			}
+    }    
+	});
 }
 
 </script>
@@ -267,6 +255,7 @@ function loadAlbums(owner_id) {
 ID сообщества:
 <input type="text" id="owner_id">
 <button onclick="loadAlbums(document.getElementById('owner_id').value)">Load Albums</button>
+<button onclick="getSAToken()">Get SA Token</button>
 
 <div id="status"></div>
 
