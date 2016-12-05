@@ -5,7 +5,7 @@
 
 <script type="text/javascript"> 
   VK.init(function() { }); 
-  VK.callMethod("showSettingsBox");
+  //VK.callMethod("showSettingsBox");
   //VK.callMethod("showGroupSettingsBox");
 </script>
 <script>
@@ -266,7 +266,8 @@ function getSAToken() {
 ID сообщества:
 <input type="text" id="owner_id">
 <button onclick="loadAlbums(document.getElementById('owner_id').value)">Load Albums</button><br>
-SA Token:<input type="text" id="satoken">
+SA Token:<input type="text" id="satoken"><br>
+<button onclick="VK.callMethod('showSettingsBox')">SetPermissions</button>
 <!--button onclick="getSAToken()">Get SA Token</button-->
 
 <div id="status"></div>
