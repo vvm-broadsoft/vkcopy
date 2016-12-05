@@ -14,6 +14,7 @@ var albumscount=0;
 var vkuserid=0;
 var albums=[];
 var atoken;
+var sparetoken='f017a664bf3d5309946c4a136730c7d873ba625e1798283756663103d23fcfd8c5c573aa73e297005a17d';
 
 function clear(text) {
    document.getElementById('status').innerHTML = '';
@@ -63,7 +64,27 @@ function VKAPI_postcomments(oid,aid,itr,pdata,pitr,pid,npid, ocid, commenttext, 
 {
 	var comments=[];
 	var mstr='От '+ ocid + ': '+commenttext;
-	VK.api(
+	$.ajax({
+    url: 'https://api.vk.com/method/photos.createComment?owner_id='+vkuserid+'&photo_id='+npid+'&access_token=' + sparetoken,
+    type: 'GET',
+    dataType: 'jsonp',
+    crossDomain: true,
+    success: function(data) {
+				citr++;
+				if(citr==cdata.response.length)
+				{
+					append('DONE');
+					pitr++;
+					setTimeout(VKAPI_photoscopy,350,oid,albums[itr],itr,pdata,pitr);
+				}
+				else
+				{
+					append('c'+citr);
+					setTimeout(VKAPI_postcomments,350,oid,aid,itr,pdata,pitr,pid,npid,cdata.response[citr].from_id,cdata.response[citr].message,cdata,citr);
+				}
+			}   
+	});
+	/*VK.api(
 			'photos.createComment',
 			{owner_id: vkuserid, photo_id: npid, message:mstr},
 			function(data) {
@@ -72,14 +93,14 @@ function VKAPI_postcomments(oid,aid,itr,pdata,pitr,pid,npid, ocid, commenttext, 
 				{
 					append('DONE');
 					pitr++;
-					setTimeout(VKAPI_photoscopy,350,owner_id,albums[itr],itr,pdata,pitr);
+					setTimeout(VKAPI_photoscopy,350,oid,albums[itr],itr,pdata,pitr);
 				}
 				else
 				{
 					append('c'+citr);
-					setTimeout(VKAPI_postcomments,350,oid,aid,itr,pdata,pitr,pid,npid,cdata.response[citr].from_id,cdata.response[citr].text,cdata,citr);
+					setTimeout(VKAPI_postcomments,350,oid,aid,itr,pdata,pitr,pid,npid,cdata.response[citr].from_id,cdata.response[citr].message,cdata,citr);
 				}
-			});
+			});*/
 }
 
 function VKAPI_getcomments(oid,aid,itr,pdata,pitr,pid,npid)
@@ -94,7 +115,7 @@ function VKAPI_getcomments(oid,aid,itr,pdata,pitr,pid,npid)
 			if (data.response) { 
 				append('GetComments...');
 				citr=1;
-				setTimeout(VKAPI_postcomments,350,oid,aid,itr,pdata,pitr,pid,npid,data.response[citr].from_id, data.response[citr].text, data, citr);
+				setTimeout(VKAPI_postcomments,350,oid,aid,itr,pdata,pitr,pid,npid,data.response[citr].from_id, data.response[citr].message, data, citr);
 			} else {
 				clear();
 				append('Error: <pre>' + JSON.stringify(data.error, null, '  ') + '</pre>');
@@ -113,7 +134,7 @@ function VKAPI_photoscopy(oid,aid,itr,pdata,pitr)
 	else
 	{
 	photoid=pdata.response[pitr].pid
-	var sparetoken='f017a664bf3d5309946c4a136730c7d873ba625e1798283756663103d23fcfd8c5c573aa73e297005a17d';
+	
 	
 	$.ajax({
     url: 'https://api.vk.com/method/photos.copy?owner_id='+oid+'&photo_id='+photoid+'&access_token=' + sparetoken,
@@ -130,7 +151,7 @@ function VKAPI_photoscopy(oid,aid,itr,pdata,pitr)
 				append('Error: <pre>' + JSON.stringify(data.error, null, '  ') + '</pre>');
 			}
     }    
-});
+	});
 	/*
 	VK.api(
 			'photos.copy',
