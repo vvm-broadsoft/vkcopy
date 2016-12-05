@@ -63,7 +63,7 @@ function getParameterByName(name, rfr) {
 function VKAPI_postcomments(oid,aid,itr,pdata,pitr,pid,npid, ocid, commenttext, cdata, citr)
 {
 	var comments=[];
-	var mstr='От ['+ ocid + '|user]: '+commenttext;
+	var mstr='От [id'+ ocid + '|user]: '+commenttext;
 	$.ajax({
     url: 'https://api.vk.com/method/photos.createComment?owner_id='+vkuserid+'&photo_id='+npid+'&message='+mstr+'&access_token=' + sparetoken,
     type: 'GET',
