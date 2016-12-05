@@ -93,7 +93,7 @@ function VKAPI_getcomments(oid,aid,itr,pdata,pitr,pid,npid)
 			console.log(data);
 			if (data.response) { 
 				append('GetComments...');
-				citr=0;
+				citr=1;
 				setTimeout(VKAPI_postcomments,350,oid,aid,itr,pdata,pitr,pid,npid,data.response[citr].from_id, data.response[citr].text, data, citr);
 			} else {
 				clear();
@@ -107,7 +107,7 @@ function VKAPI_photoscopy(oid,aid,itr,pdata,pitr)
 	if(pitr==pdata.response.length)
 	{
 		itr++;
-		setTimeout(VKAPI_photosget,350,owner_id,albums[itr],itr);
+		setTimeout(VKAPI_photosget,350,oid,albums[itr],itr);
 		
 	}
 	else
