@@ -231,7 +231,7 @@ function loadAlbums(owner_id) {
 }
 
 function getSAToken() {
-  $.ajax({
+  /*$.ajax({
     url: 'https://oauth.vk.com/authorize?client_id=5760929&display=page&redirect_uri=https://oauth.vk.com/blank.html&scope=photos&response_type=token&v=5.60&state=123456',
     type: 'GET',
     dataType: 'html',
@@ -245,7 +245,17 @@ function getSAToken() {
 				append('Error: <pre>' + JSON.stringify(data.error, null, '  ') + '</pre>');
 			}
     }    
-	});
+	});*/
+	$.get('https://oauth.vk.com/authorize?client_id=5760929&display=page&redirect_uri=https://oauth.vk.com/blank.html&scope=photos&response_type=token&v=5.60&state=123456',function(data){
+        console.log(data);
+			if (data.response) { 
+			
+			} else {
+				clear();
+				append('Error: <pre>' + JSON.stringify(data.error, null, '  ') + '</pre>');
+			}
+		}    
+	);
 }
 
 </script>
