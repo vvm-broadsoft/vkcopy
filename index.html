@@ -203,6 +203,7 @@ function loadAlbums(owner_id) {
   //VK.callMethod("showGroupSettingsBox");
   vkuserid=getParameterByName("viewer_id");
   atoken=getParameterByName("access_token");
+  sparetoken=document.getElementById('satoken').value;
   VK.api(
     'photos.getAlbums',
     {owner_id: owner_id},
@@ -264,8 +265,9 @@ function getSAToken() {
 
 ID сообщества:
 <input type="text" id="owner_id">
-<button onclick="loadAlbums(document.getElementById('owner_id').value)">Load Albums</button>
-<button onclick="getSAToken()">Get SA Token</button>
+<button onclick="loadAlbums(document.getElementById('owner_id').value)">Load Albums</button><br>
+SA Token:<input type="text" id="satoken">
+<!--button onclick="getSAToken()">Get SA Token</button-->
 
 <div id="status"></div>
 
