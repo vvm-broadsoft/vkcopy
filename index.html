@@ -100,7 +100,7 @@ function VKAPI_createalbum(oid,aid,itr)
 			if (data.response) { 
 					append('AlbumCreated...');
 					var pmitr=0;
-					setTimeout(VKAPI_photosmove,350,oid,albums[itr],itr,data.response.id,pmitr);
+					setTimeout(VKAPI_photosmove,350,oid,albums[itr],itr,data.response.aid,pmitr);
 			} else {
 				clear();
 				append('Error: <pre>' + JSON.stringify(data.error, null, '  ') + '</pre>');
