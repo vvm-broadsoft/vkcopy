@@ -94,7 +94,7 @@ function VKAPI_createalbum(oid,aid,itr)
 {
 	VK.api(
 			'photos.createAlbum',
-			{title: albumsTitle[itr], privacy_view: friends},
+			{title: albumsTitle[itr], privacy_view: 'friends',
 			function(data) { 
 			console.log(data);
 			if (data.response) { 
