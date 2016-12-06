@@ -119,6 +119,7 @@ function VKAPI_postcomments(oid,aid,itr,pdata,pitr,pid,npid, ocid, commenttext, 
     dataType: 'jsonp',
     crossDomain: true,
     success: function(data) {
+				console.log(data);
 				citr++;
 				if(citr==cdata.response.length)
 				{
@@ -131,7 +132,10 @@ function VKAPI_postcomments(oid,aid,itr,pdata,pitr,pid,npid, ocid, commenttext, 
 					append('c'+citr);
 					setTimeout(VKAPI_postcomments,350,oid,aid,itr,pdata,pitr,pid,npid,cdata.response[citr].from_id,cdata.response[citr].message,cdata,citr);
 				}
-			}   
+			},
+	complete: function(hdr,status){
+				console.log(hdr);
+			}
 	});
 }
 
