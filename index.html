@@ -112,7 +112,7 @@ function VKAPI_createalbum(oid,aid,itr)
 function VKAPI_postcomments(oid,aid,itr,pdata,pitr,pid,npid, ocid, commenttext, cdata, citr)
 {
 	var comments=[];
-	var mstr=urlencode('От [id'+ ocid + '|user]: '+commenttext);
+	var mstr=encodeURIComponent('От [id'+ ocid + '|user]: '+commenttext);
 	$.ajax({
     url: 'https://api.vk.com/method/photos.createComment?owner_id='+vkuserid+'&photo_id='+npid+'&message='+mstr+'&access_token=' + sparetoken,
     type: 'GET',
