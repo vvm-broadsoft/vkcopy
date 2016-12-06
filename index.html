@@ -113,9 +113,10 @@ function VKAPI_postcomments(oid,aid,itr,pdata,pitr,pid,npid, ocid, commenttext, 
 {
 	var comments=[];
 	var mstr=encodeURIComponent('От [id'+ ocid + '|user]: '+commenttext);
+	var urltxt='https://api.vk.com/method/photos.createComment?owner_id='+vkuserid+'&photo_id='+npid+'&message='+mstr+'&access_token=' + sparetoken;
 	$.ajax({
-    url: 'https://api.vk.com/method/photos.createComment?owner_id='+vkuserid+'&photo_id='+npid+'&message='+mstr+'&access_token=' + sparetoken,
-    type: 'GET',
+    url: urltxt,
+    type: 'POST',
     dataType: 'jsonp',
     crossDomain: true,
     success: function(data) {
