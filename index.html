@@ -147,7 +147,7 @@ function VKAPI_postcomments(oid,aid,itr,pdata,pitr,pid,npid, ocid, commenttext, 
 	var urltxt='https://api.vk.com/method/photos.createComment?access_token=' + sparetoken;
 	$.ajax({
     url: urltxt,
-    type: 'GET',
+    type: 'POST',
 //    dataType: 'jsonp',
 	data: {owner_id: vkuserid, photo_id: npid, message: mstr},
     crossDomain: true,
@@ -167,7 +167,8 @@ function VKAPI_postcomments(oid,aid,itr,pdata,pitr,pid,npid, ocid, commenttext, 
 				}
 			},
 	complete: function(hdr,status){
-				console.log(hdr);
+				
+				console.log(hdr.getResponseHeader();
 			},
 	error: function(hdr,status,ethr){
 				console.log(ethr);
