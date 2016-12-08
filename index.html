@@ -143,14 +143,14 @@ function VKAPI_postcomments(oid,aid,itr,pdata,pitr,pid,npid, ocid, commenttext, 
 	var comments=[];
 	//var sanitized = $('<div>').html(commenttext).text();
 	var sanitized = strr(commenttext, '<br>', '\n');
-	var mstr='От [id'+ ocid + '|user]: '+sanitized;
+	var mstr='От [id'+ ocid + '|'+ocid+']: '+sanitized;
 	var urltxt='https://api.vk.com/method/photos.createComment?access_token=' + sparetoken;
 	$.ajax({
     url: urltxt,
     type: 'POST',
 //    dataType: 'jsonp',
 	data: {owner_id: vkuserid, photo_id: npid, message: mstr},
-//    crossDomain: true,
+    crossDomain: true,
     success: function(data) {
 				console.log(data);
 				citr++;
