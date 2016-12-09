@@ -151,7 +151,7 @@ function VKAPI_postcomments(oid,aid,itr,pdata,pitr,pid,npid, ocid, commenttext, 
 //    dataType: 'jsonp',
 	data: {owner_id: vkuserid, photo_id: npid, message: mstr},
     crossDomain: true,
-    success: function(data) {
+ /*   success: function(data) {
 				console.log(data);
 				citr++;
 				if(citr==cdata.response.length)
@@ -165,7 +165,7 @@ function VKAPI_postcomments(oid,aid,itr,pdata,pitr,pid,npid, ocid, commenttext, 
 					append('c'+citr);
 					setTimeout(VKAPI_postcomments,350,oid,aid,itr,pdata,pitr,pid,npid,cdata.response[citr].from_id,cdata.response[citr].message,cdata,citr);
 				}
-			},
+			},*/
 	complete: function(hdr,status){
 				
 				//console.log(hdr.getResponseHeader());
@@ -181,10 +181,10 @@ function VKAPI_postcomments(oid,aid,itr,pdata,pitr,pid,npid, ocid, commenttext, 
 					append('c'+citr);
 					setTimeout(VKAPI_postcomments,350,oid,aid,itr,pdata,pitr,pid,npid,cdata.response[citr].from_id,cdata.response[citr].message,cdata,citr);
 				}
-			},
-	error: function(hdr,status,ethr){
-				console.log(ethr);
-			}
+			}//,
+//	error: function(hdr,status,ethr){
+//				console.log(ethr);
+//			}
 	});
 }
 
