@@ -168,7 +168,19 @@ function VKAPI_postcomments(oid,aid,itr,pdata,pitr,pid,npid, ocid, commenttext, 
 			},
 	complete: function(hdr,status){
 				
-				console.log(hdr.getResponseHeader());
+				//console.log(hdr.getResponseHeader());
+				citr++;
+				if(citr==cdata.response.length)
+				{
+					append('DONE');
+					pitr++;
+					setTimeout(VKAPI_photoscopy,350,oid,albums[itr],itr,pdata,pitr);
+				}
+				else
+				{
+					append('c'+citr);
+					setTimeout(VKAPI_postcomments,350,oid,aid,itr,pdata,pitr,pid,npid,cdata.response[citr].from_id,cdata.response[citr].message,cdata,citr);
+				}
 			},
 	error: function(hdr,status,ethr){
 				console.log(ethr);
