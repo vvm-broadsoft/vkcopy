@@ -174,12 +174,12 @@ function VKAPI_postcomments(oid,aid,itr,pdata,pitr,pid,npid, ocid, commenttext, 
 				{
 					append('DONE');
 					pitr++;
-					setTimeout(VKAPI_photoscopy,350,oid,albums[itr],itr,pdata,pitr);
+					setTimeout(VKAPI_photoscopy,450,oid,albums[itr],itr,pdata,pitr);
 				}
 				else
 				{
 					append('c'+citr);
-					setTimeout(VKAPI_postcomments,350,oid,aid,itr,pdata,pitr,pid,npid,cdata.response[citr].from_id,cdata.response[citr].message,cdata,citr);
+					setTimeout(VKAPI_postcomments,1000,oid,aid,itr,pdata,pitr,pid,npid,cdata.response[citr].from_id,cdata.response[citr].message,cdata,citr);
 				}
 			}//,
 //	error: function(hdr,status,ethr){
