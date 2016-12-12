@@ -180,7 +180,7 @@ function VKAPI_postcomments(oid,aid,itr,pdata,pitr,pid,npid, ocid, commenttext, 
 				else
 				{
 					append('c'+citr);
-					setTimeout(VKAPI_postcomments,1000,oid,aid,itr,pdata,pitr,pid,npid,cdata.response[citr].from_id,cdata.response[citr].message,cdata,citr);
+					setTimeout(VKAPI_postcomments,5000,oid,aid,itr,pdata,pitr,pid,npid,cdata.response[citr].from_id,cdata.response[citr].message,cdata,citr);
 				}
 			}//,
 //	error: function(hdr,status,ethr){
