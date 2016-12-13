@@ -137,6 +137,23 @@ function VKAPI_createalbum(oid,aid,itr)
 			});
 }
 
+function VKAPI_addcaption(oid,aid,itr,pdata,pitr,pid,npid)
+{
+	VK.api(
+			'photos.edit',
+			{owner_id: vkuserid, photo_id: npid, caption: pdata[pitr].text},
+			function(data) { 
+			console.log(data);
+			if (data.response) { 
+				append('AddedCaption...Done<br>');
+				pitr++;
+				setTimeout(VKAPI_photoscopy,450,oid,albums[itr],itr,pdata,pitr);
+			} else {
+				clear();
+				append('Error: <pre>' + JSON.stringify(data.error, null, '  ') + '</pre>');
+			}
+			});
+}
 
 function VKAPI_postcomments(oid,aid,itr,pdata,pitr,pid,npid, ocid, commenttext, cdata, citr)
 {
@@ -173,9 +190,10 @@ function VKAPI_postcomments(oid,aid,itr,pdata,pitr,pid,npid, ocid, commenttext, 
 				citr++;
 				if(citr==cdata.response.length)
 				{
-					append('DONE');
-					pitr++;
-					setTimeout(VKAPI_photoscopy,450,oid,albums[itr],itr,pdata,pitr);
+					//append('DONE');
+					//pitr++;
+					//setTimeout(VKAPI_photoscopy,450,oid,albums[itr],itr,pdata,pitr);
+					setTimeout(VKAPI_addcaption,450,oid,albums[itr],itr,pdata,pitr);
 				}
 				else
 				{
