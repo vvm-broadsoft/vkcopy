@@ -141,7 +141,7 @@ function VKAPI_addcaption(oid,aid,itr,pdata,pitr,pid,npid)
 {
 	VK.api(
 			'photos.edit',
-			{owner_id: vkuserid, photo_id: npid, caption: pdata[pitr].text},
+			{owner_id: vkuserid, photo_id: npid, caption: pdata.response[pitr].text},
 			function(data) { 
 			console.log(data);
 			if (data.response) { 
