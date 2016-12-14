@@ -112,7 +112,7 @@ function VKAPI_photosmove(oid,aid,itr,naid,pmitr,pdata,pitr)
 			if (data.response) { 
 					append('p'+pmitr);
 					pmitr++;
-					setTimeout(VKAPI_photosmove,350,oid,albums[itr],itr,naid,pmitr);
+					setTimeout(VKAPI_photosmove,350,oid,albums[itr],itr,naid,pmitr,pdata,pitr);
 			} else {
 				clear();
 				append('Error: <pre>' + JSON.stringify(data.error, null, '  ') + '</pre>');
