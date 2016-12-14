@@ -417,6 +417,11 @@ function getSAToken() {
 }
 
 </script>
+  <style>
+   .app {
+		overflow-y: hidden;
+   }
+  </style>
 </head>
 <body>
 
@@ -428,6 +433,6 @@ SA Token:<input type="text" id="satoken"><br>
 <button onclick="VK.callMethod('showSettingsBox')">SetPermissions</button>
 <!--button onclick="getSAToken()">Get SA Token</button-->
 
-<div id="status"></div>
+<div id="status" class="app"></div>
 
 </body>
