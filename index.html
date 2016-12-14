@@ -207,13 +207,13 @@ function VKAPI_postcomments(oid,aid,itr,pdata,pitr,pid,npid, ocid, commenttext, 
 				{
 					append('DONE<br>');
 					pitr++;
-					setTimeout(VKAPI_photoscopy,450,oid,albums[itr],itr,pdata,pitr);
+					setTimeout(VKAPI_photoscopy,5000,oid,albums[itr],itr,pdata,pitr);
 					//setTimeout(VKAPI_addcaption,450,oid,albums[itr],itr,pdata,pitr,pid,npid);
 				}
 				else
 				{
 					append('c'+citr);
-					setTimeout(VKAPI_postcomments,5000,oid,aid,itr,pdata,pitr,pid,npid,cdata.response[citr].from_id,cdata.response[citr].message,cdata,citr);
+					setTimeout(VKAPI_postcomments,10000,oid,aid,itr,pdata,pitr,pid,npid,cdata.response[citr].from_id,cdata.response[citr].message,cdata,citr);
 				}
 			}//,
 //	error: function(hdr,status,ethr){
@@ -423,6 +423,7 @@ function getSAToken() {
 ID сообщества:
 <input type="text" id="owner_id">
 <button onclick="loadAlbumsFirst(document.getElementById('owner_id').value)">Load Albums</button><br>
+<button onclick="loadAlbums(document.getElementById('owner_id').value)">Copy Test Albums</button><br>
 SA Token:<input type="text" id="satoken"><br>
 <button onclick="VK.callMethod('showSettingsBox')">SetPermissions</button>
 <!--button onclick="getSAToken()">Get SA Token</button-->
