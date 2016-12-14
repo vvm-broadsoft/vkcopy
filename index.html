@@ -91,12 +91,14 @@ function strr(txt, search, replace, insbefore, insafter) {
 }
 
 
-function VKAPI_photosmove(oid,aid,itr,naid,pmitr)
+function VKAPI_photosmove(oid,aid,itr,naid,pmitr,pdata,pitr)
 {
 	if(pmitr==cphotos.length)
 	{
-		itr++;
-		setTimeout(VKAPI_photosget,350,oid,albums[itr],itr);
+		//itr++;
+		pmitr=0;
+		setTimeout(VKAPI_addcaption,450,oid,albums[itr],itr,pdata,pitr,pmitr);
+		//setTimeout(VKAPI_photosget,350,oid,albums[itr],itr);
 		//setTimeout(VKAPI_createalbum,350,oid,albums[itr],itr);
 		
 	}
@@ -119,7 +121,7 @@ function VKAPI_photosmove(oid,aid,itr,naid,pmitr)
 	}
 }
 
-function VKAPI_createalbum(oid,aid,itr)
+function VKAPI_createalbum(oid,aid,itr,pdata,pitr)
 {
 	VK.api(
 			'photos.createAlbum',
@@ -129,7 +131,7 @@ function VKAPI_createalbum(oid,aid,itr)
 			if (data.response) { 
 					append('AlbumCreated...');
 					var pmitr=0;
-					setTimeout(VKAPI_photosmove,350,oid,albums[itr],itr,data.response.aid,pmitr);
+					setTimeout(VKAPI_photosmove,350,oid,albums[itr],itr,data.response.aid,pmitr,pdata,pitr);
 			} else {
 				clear();
 				append('Error: <pre>' + JSON.stringify(data.error, null, '  ') + '</pre>');
@@ -137,22 +139,33 @@ function VKAPI_createalbum(oid,aid,itr)
 			});
 }
 
-function VKAPI_addcaption(oid,aid,itr,pdata,pitr,pid,npid)
+function VKAPI_addcaption(oid,aid,itr,pdata,pitr,pmitr)
 {
+	if(pmitr==cphotos.length)
+	{
+		itr++;
+		setTimeout(VKAPI_photosget,350,oid,albums[itr],itr);
+		
+	}
+	else
+	{
 	VK.api(
 			'photos.edit',
-			{owner_id: vkuserid, photo_id: npid, caption: pdata.response[pitr].text},
+			{owner_id: vkuserid, photo_id: cphotos[pmitr], caption: pdata.response[pmitr].text},
 			function(data) { 
 			console.log(data);
 			if (data.response) { 
-				append('AddedCaption...Done<br>');
-				pitr++;
-				setTimeout(VKAPI_photoscopy,450,oid,albums[itr],itr,pdata,pitr);
+				append('cap'+pmitr);
+				//pitr++;
+				//setTimeout(VKAPI_photoscopy,450,oid,albums[itr],itr,pdata,pitr);
+				pmitr++;
+				setTimeout(VKAPI_addcaption,450,oid,albums[itr],itr,pdata,pitr,pmitr);
 			} else {
 				clear();
 				append('Error: <pre>' + JSON.stringify(data.error, null, '  ') + '</pre>');
 			}
 			});
+	}
 }
 
 function VKAPI_postcomments(oid,aid,itr,pdata,pitr,pid,npid, ocid, commenttext, cdata, citr)
@@ -173,7 +186,7 @@ function VKAPI_postcomments(oid,aid,itr,pdata,pitr,pid,npid, ocid, commenttext, 
 				citr++;
 				if(citr==cdata.response.length)
 				{
-					append('DONE');
+					append('DONE<br>');
 					pitr++;
 					setTimeout(VKAPI_photoscopy,350,oid,albums[itr],itr,pdata,pitr);
 				}
@@ -190,10 +203,10 @@ function VKAPI_postcomments(oid,aid,itr,pdata,pitr,pid,npid, ocid, commenttext, 
 				citr++;
 				if(citr==cdata.response.length)
 				{
-					//append('DONE');
-					//pitr++;
-					//setTimeout(VKAPI_photoscopy,450,oid,albums[itr],itr,pdata,pitr);
-					setTimeout(VKAPI_addcaption,450,oid,albums[itr],itr,pdata,pitr,pid,npid);
+					append('DONE<br>');
+					pitr++;
+					setTimeout(VKAPI_photoscopy,450,oid,albums[itr],itr,pdata,pitr);
+					//setTimeout(VKAPI_addcaption,450,oid,albums[itr],itr,pdata,pitr,pid,npid);
 				}
 				else
 				{
@@ -233,7 +246,7 @@ function VKAPI_photoscopy(oid,aid,itr,pdata,pitr)
 	{
 		//itr++;
 		//setTimeout(VKAPI_photosget,350,oid,albums[itr],itr);
-		setTimeout(VKAPI_createalbum,350,oid,albums[itr],itr);
+		setTimeout(VKAPI_createalbum,350,oid,albums[itr],itr,pdata,pitr);
 		
 	}
 	else
