@@ -372,7 +372,7 @@ function loadAlbumsFirst(owner_id) {
       if (data.response) { 
 	// albumscount=data.length;
          for (var i in data.response) {
-           append('<label><input id="'+data.response[i].aid+'" type="checkbox" >'+data.response[i].title + '</label>br> ');
+           append('<label><input id="'+data.response[i].aid+'" type="checkbox" >'+data.response[i].title + '</label><br> ');
 		   albums[i]=data.response[i].aid;
 		   albumsTitle[i]=data.response[i].title;
 		   
