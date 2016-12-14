@@ -123,9 +123,10 @@ function VKAPI_photosmove(oid,aid,itr,naid,pmitr,pdata,pitr)
 
 function VKAPI_createalbum(oid,aid,itr,pdata,pitr)
 {
+	var tag='copiedfrom_'+oid+'_'+aid;
 	VK.api(
 			'photos.createAlbum',
-			{title: albumsTitle[itr], privacy: 1},
+			{title: albumsTitle[itr], privacy: 1, description: tag},
 			function(data) { 
 			console.log(data);
 			if (data.response) { 
@@ -354,6 +355,39 @@ function loadAlbums(owner_id) {
   VK.callMethod("resizeWindow", 800, 4000); 
 }
 
+function loadAlbumsFirst(owner_id) {
+  albums=[];
+  albumsTitle=[];
+  imgcount=0;
+  clear();
+  //VK.callMethod("showGroupSettingsBox");
+  vkuserid=getParameterByName("viewer_id");
+  atoken=getParameterByName("access_token");
+  sparetoken=document.getElementById('satoken').value;
+  VK.api(
+    'photos.getAlbums',
+    {owner_id: owner_id},
+    function(data) { 
+      console.log(data);
+      if (data.response) { 
+	// albumscount=data.length;
+         for (var i in data.response) {
+           append('<label><input id="'+data.response[i].aid+'" type="checkbox" >'data.response[i].title + '</label>br> ');
+		   albums[i]=data.response[i].aid;
+		   albumsTitle[i]=data.response[i].title;
+		   
+         }
+
+      } else {
+         clear();
+         append('Error: <pre>' + JSON.stringify(data.error, null, '  ') + '</pre>');
+      }
+  });
+
+  
+  VK.callMethod("resizeWindow", 800, 4000); 
+}
+
 function getSAToken() {
   /*$.ajax({
     url: 'https://oauth.vk.com/authorize?client_id=5760929&display=page&redirect_uri=https://oauth.vk.com/blank.html&scope=photos&response_type=token&v=5.60&state=123456',
@@ -388,7 +422,7 @@ function getSAToken() {
 
 ID сообщества:
 <input type="text" id="owner_id">
-<button onclick="loadAlbums(document.getElementById('owner_id').value)">Load Albums</button><br>
+<button onclick="loadAlbumsFirst(document.getElementById('owner_id').value)">Load Albums</button><br>
 SA Token:<input type="text" id="satoken"><br>
 <button onclick="VK.callMethod('showSettingsBox')">SetPermissions</button>
 <!--button onclick="getSAToken()">Get SA Token</button-->
