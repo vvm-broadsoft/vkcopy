@@ -149,9 +149,10 @@ function VKAPI_addcaption(oid,aid,itr,pdata,pitr,pmitr)
 	}
 	else
 	{
+	var sanitized = strr(pdata.response[pmitr].text, '<br>', '\n');
 	VK.api(
 			'photos.edit',
-			{owner_id: vkuserid, photo_id: cphotos[pmitr], caption: pdata.response[pmitr].text},
+			{owner_id: vkuserid, photo_id: cphotos[pmitr], caption: sanitized},
 			function(data) { 
 			console.log(data);
 			if (data.response) { 
