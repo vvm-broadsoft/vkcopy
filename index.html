@@ -202,6 +202,7 @@ function VKAPI_postcomments(oid,aid,itr,pdata,pitr,pid,npid, ocid, commenttext, 
 				
 				//console.log(hdr.getResponseHeader());
 				console.log(mstr);
+				console.log(hdr.responseText);
 				if(status == 'success')citr++;
 				else append('_err_');
 				if(citr==cdata.response.length)
