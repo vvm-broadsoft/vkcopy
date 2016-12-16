@@ -205,7 +205,8 @@ function VKAPI_postcomments(oid,aid,itr,pdata,pitr,pid,npid, ocid, commenttext, 
 				var captchaTO=0;
 				console.log(hdr.responseText);
 				console.log(status);
-				if(hdr.responseText.indexOf('response')>0){citr++;}
+				var respval=hdr.responseText.indexOf('response');
+				if(respval > 0 && respval < 20){citr++;}
 				else{append('_err_');captchaTO=5000;}
 				if(citr==cdata.response.length)
 				{
