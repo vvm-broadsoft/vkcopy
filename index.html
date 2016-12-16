@@ -202,10 +202,11 @@ function VKAPI_postcomments(oid,aid,itr,pdata,pitr,pid,npid, ocid, commenttext, 
 				
 				//console.log(hdr.getResponseHeader());
 				//console.log(mstr);
+				var captchaTO=0;
 				console.log(hdr.responseText);
 				console.log(status);
-				if(hdr.responseText.indexOf('response')>0)citr++;
-				else append('_err_');
+				if(hdr.responseText.indexOf('response')>0){citr++;}
+				else{append('_err_');captchaTO=5000;}
 				if(citr==cdata.response.length)
 				{
 					append('DONE<br>');
@@ -216,7 +217,7 @@ function VKAPI_postcomments(oid,aid,itr,pdata,pitr,pid,npid, ocid, commenttext, 
 				else
 				{
 					append('c'+citr);
-					setTimeout(VKAPI_postcomments,3000,oid,aid,itr,pdata,pitr,pid,npid,cdata.response[citr].from_id,cdata.response[citr].message,cdata,citr);
+					setTimeout(VKAPI_postcomments,3000+captchaTO,oid,aid,itr,pdata,pitr,pid,npid,cdata.response[citr].from_id,cdata.response[citr].message,cdata,citr);
 				}
 			}//,
 //	error: function(hdr,status,ethr){
