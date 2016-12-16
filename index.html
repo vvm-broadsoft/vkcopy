@@ -204,19 +204,19 @@ function VKAPI_postcomments(oid,aid,itr,pdata,pitr,pid,npid, ocid, commenttext, 
 				//console.log(mstr);
 				console.log(hdr.responseText);
 				console.log(status);
-				if(hdr.responseText.response)citr++;
+				if(hdr.responseText.indexOf('response')>0)citr++;
 				else append('_err_');
 				if(citr==cdata.response.length)
 				{
 					append('DONE<br>');
 					pitr++;
-					setTimeout(VKAPI_photoscopy,5000,oid,albums[itr],itr,pdata,pitr);
+					setTimeout(VKAPI_photoscopy,3000,oid,albums[itr],itr,pdata,pitr);
 					//setTimeout(VKAPI_addcaption,450,oid,albums[itr],itr,pdata,pitr,pid,npid);
 				}
 				else
 				{
 					append('c'+citr);
-					setTimeout(VKAPI_postcomments,10000,oid,aid,itr,pdata,pitr,pid,npid,cdata.response[citr].from_id,cdata.response[citr].message,cdata,citr);
+					setTimeout(VKAPI_postcomments,3000,oid,aid,itr,pdata,pitr,pid,npid,cdata.response[citr].from_id,cdata.response[citr].message,cdata,citr);
 				}
 			}//,
 //	error: function(hdr,status,ethr){
