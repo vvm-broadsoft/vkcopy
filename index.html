@@ -302,7 +302,7 @@ function VKAPI_photosget(oid,aid,itr)
 				if(itr==albumscount){
 					append('TOTAL[' + imgcount + '] ');
 					}
-				else if(aid==236963646){
+				else if(albumschk.indexOf(aid)>=0){
 					append('Copying...');
 					var pdata=data;
 					pitr=0;
@@ -378,12 +378,12 @@ function loadAlbumsFirst(owner_id) {
       if (data.response) { 
 	// albumscount=data.length;
          for (var i in data.response) {
-           append('<label><input id="'+data.response[i].aid+'" type="checkbox" >['+ i + '] ' + data.response[i].title + '</label><br> ');
+           append('<label><input value="'+data.response[i].aid+'" name="albumchk" type="checkbox" >['+ i + '] ' + data.response[i].title + '</label><br> ');
 		   albums[i]=data.response[i].aid;
 		   albumsTitle[i]=data.response[i].title;
 		   
          }
-		append('<button onclick="VK.callMethod("showSettingsBox")">Copy Selected</button>');
+		append('<button onclick="copySelected(document.getElementById('owner_id').value)">Copy Selected</button>');
       } else {
          clear();
          append('Error: <pre>' + JSON.stringify(data.error, null, '  ') + '</pre>');
@@ -393,6 +393,12 @@ function loadAlbumsFirst(owner_id) {
   
   VK.callMethod("resizeWindow", 800, 4000); 
 }
+
+function copySelected(owner_id) {
+	$("input[name=albumchk]:checked").each(function() {albumschk.push(this.value)});
+	setTimeout(VKAPI_photosget,350,owner_id,albums[0],0);
+}
+
 
 function getSAToken() {
   /*$.ajax({
@@ -426,7 +432,7 @@ function getSAToken() {
   <style>
    .app {
 		overflow-y: auto;
-		height:400px;
+		height:700px;
    }
   </style>
 </head>
