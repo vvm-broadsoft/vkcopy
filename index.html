@@ -376,13 +376,14 @@ function loadAlbumsFirst(owner_id) {
     function(data) { 
       console.log(data);
       if (data.response) { 
-	// albumscount=data.length;
+//		 albumscount=data.length;
          for (var i in data.response) {
            append('<label><input value="'+data.response[i].aid+'" name="albumchk" type="checkbox" >['+ i + '] ' + data.response[i].title + '</label><br> ');
 		   albums[i]=data.response[i].aid;
 		   albumsTitle[i]=data.response[i].title;
 		   
          }
+		 albumscount=i;
 		append('<button onclick="copySelected(document.getElementById('+"'owner_id'"+').value)">Copy Selected</button>');
       } else {
          clear();
