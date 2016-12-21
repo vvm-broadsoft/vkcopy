@@ -383,7 +383,7 @@ function loadAlbumsFirst(owner_id) {
 		   albumsTitle[i]=data.response[i].title;
 		   
          }
-		append('<button onclick="copySelected(document.getElementById('owner_id').value)">Copy Selected</button>');
+		append('<button onclick="copySelected(document.getElementById("owner_id").value)">Copy Selected</button>');
       } else {
          clear();
          append('Error: <pre>' + JSON.stringify(data.error, null, '  ') + '</pre>');
