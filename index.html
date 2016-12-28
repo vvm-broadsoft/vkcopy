@@ -228,10 +228,29 @@ function VKAPI_postcomments(oid,aid,itr,pdata,pitr,pid,npid, ocid, commenttext, 
 	});
 }
 
+function VKAPI_execute(oid,aid,itr,pdata,pitr,exec)
+{
+	VK.api(
+			'execute',
+			{code: exec},
+			function(data) { 
+			console.log(data);
+			if (data.response) { 
+
+					pitr++;
+					setTimeout(VKAPI_photoscopy,3000,oid,albums[itr],itr,pdata,pitr);
+			} else {
+				clear();
+				append('Error: <pre>' + JSON.stringify(data.error, null, '  ') + '</pre>');
+			}
+			});
+}
+
 function VKAPI_getcomments(oid,aid,itr,pdata,pitr,pid,npid)
 {
 	var comments=[];
 	var citr=0;
+	var exec='';
 	VK.api(
 			'photos.getComments',
 			{owner_id: oid, photo_id: pid},
@@ -240,7 +259,13 @@ function VKAPI_getcomments(oid,aid,itr,pdata,pitr,pid,npid)
 			if (data.response) { 
 				append('GetComments...');
 				citr=1;
-				setTimeout(VKAPI_postcomments,350,oid,aid,itr,pdata,pitr,pid,npid,data.response[citr].from_id, data.response[citr].message, data, citr);
+				for (var j in data.response) {
+				//append(data.response[j].pid + ' ');
+				var sanitized = strr(data.response[citr].message, '<br>', '\n');
+				var mstr='От [id'+ data.response[j].from_id + '|'+data.response[j].from_id+']: '+sanitized;
+				exec=exec+'API.photos.Createcomment({owner_id:'+ vkuserid+', photo_id:'+ npid+', message:'+ mstr+'});';
+				}
+				setTimeout(VKAPI_execute,350,oid,aid,itr,pdata,pitr,exec);
 			} else {
 				clear();
 				append('Error: <pre>' + JSON.stringify(data.error, null, '  ') + '</pre>');
