@@ -230,20 +230,28 @@ function VKAPI_postcomments(oid,aid,itr,pdata,pitr,pid,npid, ocid, commenttext, 
 
 function VKAPI_execute(oid,aid,itr,pdata,pitr,exec)
 {
-	VK.api(
-			'execute',
-			{code: exec},
-			function(data) { 
-			console.log(data);
-			if (data.response) { 
+	var urltxt='https://api.vk.com/method/execute?access_token=' + sparetoken;
+	$.ajax({
+    url: urltxt,
+    type: 'POST',
+	data: {code: exec},
+    crossDomain: true,
+	complete: function(hdr,status){
 
+				var captchaTO=0;
+				console.log(hdr.responseText);
+				console.log(status);
+				var respval=hdr.responseText.indexOf('response');
+				if(respval > 0 && respval < 20){citr++;}
+				else{append('_err_');captchaTO=5000;}
+					append('DONE<br>');
 					pitr++;
 					setTimeout(VKAPI_photoscopy,3000,oid,albums[itr],itr,pdata,pitr);
-			} else {
-				clear();
-				append('Error: <pre>' + JSON.stringify(data.error, null, '  ') + '</pre>');
+				
 			}
-			});
+
+	});
+
 }
 
 function VKAPI_getcomments(oid,aid,itr,pdata,pitr,pid,npid)
