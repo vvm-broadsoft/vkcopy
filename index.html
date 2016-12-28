@@ -271,7 +271,7 @@ function VKAPI_getcomments(oid,aid,itr,pdata,pitr,pid,npid)
 				//append(data.response[j].pid + ' ');
 				var sanitized = strr(data.response[citr].message, '<br>', '\n');
 				var mstr='От [id'+ data.response[j].from_id + '|'+data.response[j].from_id+']: '+sanitized;
-				exec=exec+'API.photos.Createcomment({owner_id:'+ vkuserid+', photo_id:'+ npid+', message:"'+ mstr+'"});';
+				exec=exec+'API.photos.createComment({owner_id:'+ vkuserid+', photo_id:'+ npid+', message:"'+ mstr+'"});';
 				}
 				setTimeout(VKAPI_execute,350,oid,aid,itr,pdata,pitr,exec);
 			} else {
