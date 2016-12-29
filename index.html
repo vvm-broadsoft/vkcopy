@@ -18,6 +18,7 @@ var albumschk=[];
 var cphotos=[];
 var atoken;
 var sparetoken='f017a664bf3d5309946c4a136730c7d873ba625e1798283756663103d23fcfd8c5c573aa73e297005a17d';
+var oldcitr=0;
 
 function clear(text) {
    document.getElementById('status').innerHTML = '';
@@ -174,7 +175,7 @@ function VKAPI_addcaption(oid,aid,itr,pdata,pitr,pmitr)
 function VKAPI_postcomments(oid,aid,itr,pdata,pitr,pid,npid, ocid, commenttext, cdata, citr)
 {
 	var comments=[];
-	var oldcitr=0;
+	
 	//var sanitized = $('<div>').html(commenttext).text();
 	var sanitized = strr(commenttext, '<br>', '\n');
 	var mstr='От [id'+ ocid + '|'+ocid+']: '+sanitized;
