@@ -335,7 +335,7 @@ function VKAPI_photosget(oid,aid,itr)
 				if(itr==albumscount){
 					append('TOTAL[' + imgcount + '] ');
 					}
-				else if(albumschk.IndexOf(''+aid+'')>-1){
+				else if(albumschk.indexOf(''+aid+'')>-1){
 					append('Copying...');
 					var pdata=data;
 					pitr=0;
