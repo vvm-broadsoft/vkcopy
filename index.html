@@ -210,7 +210,7 @@ function VKAPI_postcomments(oid,aid,itr,pdata,pitr,pid,npid, ocid, commenttext, 
 				console.log(status);
 				var respval=hdr.responseText.indexOf('response');
 				if(respval > 0 && respval < 20){oldcitr=0;citr++;}
-				else{oldcitr++;append('_err_');captchaTO=oldcitr*5000;}
+				else{oldcitr++;if(oldcitr>3)oldcitr=36;append('_err_');captchaTO=oldcitr*5000;}
 				if(citr==cdata.response.length)
 				{
 					append('DONE<br>');
