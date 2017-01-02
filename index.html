@@ -313,6 +313,10 @@ function VKAPI_photoscopy(oid,aid,itr,pdata,pitr)
 				clear();
 				append('Error: <pre>' + JSON.stringify(data.error, null, '  ') + '</pre>');
 			}
+    },
+	error: function(data){
+        console.log(data);
+		setTimeout(VKAPI_photoscopy,15000,oid,albums[itr],itr,pdata,pitr);
     }    
 	});
 
