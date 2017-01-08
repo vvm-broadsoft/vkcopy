@@ -19,6 +19,7 @@ var cphotos=[];
 var atoken;
 var sparetoken='f017a664bf3d5309946c4a136730c7d873ba625e1798283756663103d23fcfd8c5c573aa73e297005a17d';
 var oldcitr=0;
+var capchasid='';
 
 function clear(text) {
    document.getElementById('status').innerHTML = '';
@@ -180,6 +181,8 @@ function VKAPI_postcomments(oid,aid,itr,pdata,pitr,pid,npid, ocid, commenttext, 
 	var sanitized = strr(commenttext, '<br>', '\n');
 	var mstr='От [id'+ ocid + '|'+ocid+']: '+sanitized;
 	var urltxt='https://api.vk.com/method/photos.createComment?access_token=' + sparetoken;
+	capchatxt=document.getElementById(capchasid).value;
+	if(capchatxt!='')urltxt=urltxt+'&captcha_sid='+capchasid+'&captcha_key='+capchatxt
 	$.ajax({
     url: urltxt,
     type: 'POST',
@@ -209,8 +212,19 @@ function VKAPI_postcomments(oid,aid,itr,pdata,pitr,pid,npid, ocid, commenttext, 
 				console.log(hdr.responseText);
 				console.log(status);
 				var respval=hdr.responseText.indexOf('response');
+				var errval=hdr.responseText.indexOf('error_code');
+				var obj = JSON.parse(hdr.responseText);
+				//if(errval > 0 && errval < 20){}
 				if(respval > 0 && respval < 20){oldcitr=0;citr++;}
 				else{oldcitr++;if(oldcitr==3){oldcitr=oldcitr+36;}else if(oldcitr>39){oldcitr=oldcitr+180;}append('_err_');captchaTO=oldcitr*5000;}
+				if(obj.error)
+				{
+				if(obj.error.error_code==14){
+					
+					capchasid=obj.captcha_sid;
+					append('<img='+obj.captcha_img+'><input type="text" id='+capchasid+'>');
+				}
+				}
 				if(citr==cdata.response.length)
 				{
 					append('DONE<br>');
