@@ -222,8 +222,8 @@ function VKAPI_postcomments(oid,aid,itr,pdata,pitr,pid,npid, ocid, commenttext, 
 				{
 				if(obj.error.error_code==14){
 					
-					capchasid=obj.captcha_sid;
-					append('<img src='+obj.captcha_img+'><input type="text" id='+capchasid+'>');
+					capchasid=obj.error.captcha_sid;
+					append('<img src='+obj.error.captcha_img+'><input type="text" id='+capchasid+'>');
 				}
 				}
 				if(citr==cdata.response.length)
