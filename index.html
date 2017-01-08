@@ -181,6 +181,7 @@ function VKAPI_postcomments(oid,aid,itr,pdata,pitr,pid,npid, ocid, commenttext, 
 	var sanitized = strr(commenttext, '<br>', '\n');
 	var mstr='От [id'+ ocid + '|'+ocid+']: '+sanitized;
 	var urltxt='https://api.vk.com/method/photos.createComment?access_token=' + sparetoken;
+	var capchatxt='';
 	if(capchasid!='')capchatxt=document.getElementById(capchasid).value;
 	if(capchatxt!='')urltxt=urltxt+'&captcha_sid='+capchasid+'&captcha_key='+capchatxt
 	$.ajax({
