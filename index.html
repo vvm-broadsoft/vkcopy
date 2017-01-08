@@ -217,7 +217,7 @@ function VKAPI_postcomments(oid,aid,itr,pdata,pitr,pid,npid, ocid, commenttext, 
 				var obj = JSON.parse(hdr.responseText);
 				//if(errval > 0 && errval < 20){}
 				if(respval > 0 && respval < 20){oldcitr=0;citr++;}
-				else{oldcitr++;if(oldcitr==3){oldcitr=oldcitr+36;}else if(oldcitr>39){oldcitr=oldcitr+180;}append('_err_');captchaTO=oldcitr*5000;}
+				else{oldcitr++;if(oldcitr==3){oldcitr=oldcitr+36;}/*else if(oldcitr>39){oldcitr=oldcitr+180;}*/append('_err_');captchaTO=oldcitr*5000;}
 				if(obj.error)
 				{
 				if(obj.error.error_code==14){
