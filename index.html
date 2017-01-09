@@ -183,7 +183,13 @@ function VKAPI_postcomments(oid,aid,itr,pdata,pitr,pid,npid, ocid, commenttext, 
 	var urltxt='https://api.vk.com/method/photos.createComment?access_token=' + sparetoken;
 	var capchatxt='';
 	if(capchasid!='')capchatxt=document.getElementById(capchasid).value;
-	if(capchatxt!='')urltxt=urltxt+'&captcha_sid='+capchasid+'&captcha_key='+capchatxt
+	if(capchatxt!=''){urltxt=urltxt+'&captcha_sid='+capchasid+'&captcha_key='+capchatxt; oldcitr=0;}
+	if(oldcitr>180)
+	{
+		setTimeout(VKAPI_postcomments,60000,oid,aid,itr,pdata,pitr,pid,npid,cdata.response[citr].from_id,cdata.response[citr].message,cdata,citr);
+	}
+	else{
+	
 	$.ajax({
     url: urltxt,
     type: 'POST',
@@ -243,6 +249,7 @@ function VKAPI_postcomments(oid,aid,itr,pdata,pitr,pid,npid, ocid, commenttext, 
 //				console.log(ethr);
 //			}
 	});
+	}
 }
 
 function VKAPI_execute(oid,aid,itr,pdata,pitr,exec)
